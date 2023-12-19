@@ -1,23 +1,37 @@
-//create a populate board function.
-let DivContainer = document.querySelector(".container");
+const enterBtn = document.querySelector(".enter-button");
 
-DivContainer.style.gridTemplateColumns = "repeat(16, 1fr)";
-DivContainer.style.gridTemplateRows = "repeat(16, 1fr)";
+function populateBoard(size) {
+  //create a populate board function.
+  let DivContainer = document.querySelector(".container");
 
-for (let i = 0; i < 256; i++) {
-  let square = document.createElement("div");
-  square.style.background = "#FFFACD";
-  //https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentElement
+  //resetting the state here.
+  let squares = DivContainer.querySelectorAll("div");
+  squares.forEach((div) => div.remove());
 
-  /* 
-on this anonymous function you were not adding the attributes to e
-also this needs to be moved from line 17 to inside the loop.
-at line 10
-*/
-  square.addEventListener("mouseover", () => {
-    square.style.background = "black";
-  });
+  DivContainer.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
+  DivContainer.style.gridTemplateRows = `repeat(${size}, 1fr)`;
 
-  square.className = "grid-square";
-  DivContainer.insertAdjacentElement("beforeend", square);
+  let newSize = size * size;
+  for (let i = 0; i < newSize; i++) {
+    let square = document.createElement("div");
+    square.style.background = "#FFFACD";
+
+    square.addEventListener("mouseover", () => {
+      square.style.background = "black";
+    });
+
+    square.className = "grid-square";
+    DivContainer.insertAdjacentElement("beforeend", square);
+  }
 }
+
+populateBoard(16);
+
+enterBtn.addEventListener("click", () => {
+  let size = parseInt(document.querySelector(".input-field").value, 10);
+
+  if (size > 100 || size <= 0 || !Number.isInteger(size)) {
+    alert("Invalid values, please choose a grid with a size 0 to 100");
+  }
+  populateBoard(size);
+});
