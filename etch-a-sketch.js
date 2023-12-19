@@ -1,4 +1,5 @@
 const enterBtn = document.querySelector(".enter-button");
+const resetBtn = document.querySelector(".reset-button");
 
 function populateBoard(size) {
   //create a populate board function.
@@ -34,4 +35,8 @@ enterBtn.addEventListener("click", () => {
     alert("Invalid values, please choose a grid with a size 0 to 100");
   }
   populateBoard(size);
+});
+
+resetBtn.addEventListener("click", () => {
+  populateBoard(16);
 });
